@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Virgo.Project Version="1" Guid="a7a6bd38-070e-4bc9-9310-5a930b3a6d9e" Creation="2020-09-08T16:50:39.6807616+06:00">
+  <Notes></Notes>
+  <Description></Description>
+  <Author>Egor</Author>
+  <Location></Location>
+  <MetaData />
+  <Devices current="c3992c00-896d-41a2-8f01-da0088d67540">
+    <Device Id="c3992c00-896d-41a2-8f01-da0088d67540" Type="Unidrive M200" Name="My Drive" Location="My Drive" />
+  </Devices>
+</Virgo.Project>

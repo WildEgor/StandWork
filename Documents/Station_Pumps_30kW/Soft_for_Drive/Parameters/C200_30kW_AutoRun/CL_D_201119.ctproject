@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Virgo.Project Version="1" Guid="113292f5-87f8-41b2-8805-35ab883fe0e9" Creation="2020-01-13T13:07:53.3797492+06:00">
+  <Notes></Notes>
+  <Description></Description>
+  <Author>PGPC</Author>
+  <Location></Location>
+  <MetaData />
+  <Devices current="88c9d7e8-1487-49f1-a49c-408b05e6cae3">
+    <Device Id="88c9d7e8-1487-49f1-a49c-408b05e6cae3" Type="Commander C200" Name="C200_30kW" Location="C200_30kW (2)" />
+  </Devices>
+</Virgo.Project>
