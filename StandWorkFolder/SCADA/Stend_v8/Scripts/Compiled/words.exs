@@ -1,4 +1,9 @@
-﻿Рецепт не выбран
+﻿SF1L1
+SF2L1
+SF11L1
+SF22L1
+EmergencyStopButton
+Рецепт не выбран
 report_1
 test
 454762047
@@ -50,7 +55,3 @@ SELECT * FROM `recipes`
 
 
 
-SF1L1_1
-SF2L1
-SF11L1
-SF22L1
