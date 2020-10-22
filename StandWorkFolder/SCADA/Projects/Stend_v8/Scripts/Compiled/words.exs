@@ -59,3 +59,6 @@ SELECT * FROM `recipes`
 Cвязь с контроллером восстановлена!
 Schedule3
 Schedule3
+https://api.openweathermap.org/data/2.5/weather?q=
+&appid=
+&units=metric
