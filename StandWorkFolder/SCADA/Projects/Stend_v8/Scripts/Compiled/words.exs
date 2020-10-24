@@ -62,14 +62,14 @@ Schedule3
 https://api.openweathermap.org/data/2.5/weather?q=
 &appid=
 &units=metric
-N
 NE
-NE
+E
 SE
 S
 SW
 W
 NW
+N
 &0
 &
 &0
