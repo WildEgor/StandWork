@@ -3,6 +3,7 @@ SF2L1
 SF11L1
 SF22L1
 EmergencyStopButton
+PLCConnect
 Рецепт не выбран
 report_1
 test
