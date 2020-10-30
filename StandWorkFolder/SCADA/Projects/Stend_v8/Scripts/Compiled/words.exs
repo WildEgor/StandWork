@@ -96,18 +96,13 @@ W
 NW
 N
 N
-TREND_
-_1
+_
 PV_
 _1
 SP_
 _1
 MV_
 _1
-&0
-&
-&0
-&
 W
 01d
 W
@@ -126,8 +121,7 @@ W
 13d
 W
 50d
-KP_
-_1
+_
 SP_
 _1
 KP_
@@ -163,14 +157,11 @@ KD
 KD_
 SP
 SP_
-_1
+_
 _1
 SP_
 KP_
 KI_
 KD_
-SETTINGS_
-_1
-Не выбран
 dtInteger
 dtInt64
