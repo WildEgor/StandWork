@@ -159,9 +159,8 @@ SP
 SP_
 _
 _1
-SP_
-KP_
-KI_
-KD_
+SETTINGS_
+_1
+edt_PID
 dtInteger
 dtInt64
