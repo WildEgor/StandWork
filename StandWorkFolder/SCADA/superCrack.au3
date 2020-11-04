@@ -3,22 +3,19 @@
 #include <Timers.au3>
 #include <AutoItConstants.au3>
 
-Global $PathApp1 = "C:\Program Files\Cogent\Cogent DataHub\CogentDataHub.exe"
-Global $NameApp1 = "CogentDataHub"
-Global $PathApp2 = "C:\Users\STAND\Documents\Simple-Scada2\Server.exe"
-Global $NameApp2 = "Server"
+Global $PathApp1 = "C:\Program Files\Cogent\Cogent DataHub\"
+Global $NameApp1 = "CogentDataHub.exe"
+Global $PathApp2 = "C:\Program Files (x86)\Simple-Scada 2\"
+Global $NameApp2 = "Server.exe"
 
 Global $App1Window = "no valid license"
 Global $App2Window = "Время вышло"
 
-Global $TimeApp1 = 2 ; in sec
-Global $TimeApp2 = 3 ; in sec
-Global $Timer1 ; reset start popup
-Global $Timer2 ; close after run delay
+Global $TimeApp1 = 0.5 ; in min
+Global $Timer1 ; close after run delay
 
 Global $aMes = ""
 Global $App1isRun = false
-Global $App2isRun = false
 Global $hGUI
 
 Main()
@@ -32,12 +29,7 @@ Func Main()
    GUISetState(@SW_SHOW, $hGUI)
 
    $aMes  = "Setup start..."
-   GUICtrlCreateLabel(String($aMes), 30, 10)
-   $App1isRun = RunApps($PathApp1, $NameApp1)
-   $Timer1 = _Timer_SetTimer($hGUI, 200, "_Update")
-
-
-   Sleep(100)
+   GUICtrlCreateLabel($aMes, 30, 10)
 
    While 1
 	  GUICtrlCreateLabel($aMes, 30, 10)
@@ -49,52 +41,50 @@ Func Main()
 	  EndSwitch
 
 	  if ($App1isRun) Then
+		 if WinExists($App1Window) then
+			CloseWind($App1Window)
+		 EndIf
+		 if WinExists($App2Window) then
+			CloseWind($App2Window)
+		 EndIf
 		 $aMes = "Start count down timer to restart..."
-		 If @error Or $Timer2 = 0 Then ContinueLoop
-		 _Timer_KillTimer($hGUI, $Timer1)
-		 Sleep(100)
+		 Sleep(1000)
+		 If @error Or $Timer1 = 0 Then ContinueLoop
 		 Else
 		 $aMes = "Running app now..."
 		 $App1isRun = RunApps($PathApp1, $NameApp1)
-		 _Timer_KillTimer($hGUI, $Timer2)
-		 Sleep(1000)
-		 $App1isRun = RunApps($PathApp1, $NameApp1)
-		 $Timer1 = _Timer_SetTimer($hGUI, 200, "_Update")
-		 If @error Or $Timer1 = 0 Then ContinueLoop
+		 RunApps($PathApp2, $NameApp2)
+		 $Timer1 = _Timer_SetTimer($hGUI, $TimeApp1*60000, "_Close")
 	  EndIf
    WEnd
    GUIDelete($hGUI)
 EndFunc
 
-Func _Update($hWnd, $iMsg, $iIDTimer, $iTime)
-   #forceref $hWnd, $iMsg, $iIDTimer, $iTime
-   if WinExists($App1Window) then
-	  CloseWind($App1Window)
-   EndIf
-EndFunc
-
 Func _Close($hWnd, $iMsg, $iIDTimer, $iTime)
    CloseApps($NameApp1)
+   CloseApps($NameApp2)
    $App1isRun = False
 EndFunc
 
 Func RunApps($Path, $name)
-   if (ProcessExists($name&".exe")) Then
+   if ProcessExists($name) Then
 	  $aMes = "App is run!"
-	  Sleep(100)
-	  $Timer2 = _Timer_SetTimer($hGUI, 30000, "_Close")
 	  return True
    Else
+	  _Timer_KillTimer($hGUI, $Timer1)
 	  $aMes = "Running app..."
-	  Run($Path)
+	  Run($Path&$name)
 	  WinWait($name, "", 5)
-	  Sleep(100)
-	  return False
+	  if ProcessExists($name) then
+		 return True
+	  Else
+		 return False
+	  EndIf
    EndIf
 EndFunc
 
 Func CloseApps($name)
-   ProcessClose($name&".exe")
+   ProcessClose($name)
 EndFunc
 
 Func CloseWind($appname)
