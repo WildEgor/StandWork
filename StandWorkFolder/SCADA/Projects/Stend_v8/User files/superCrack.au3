@@ -3,26 +3,29 @@
 #include <Timers.au3>
 #include <AutoItConstants.au3>
 
-Global $PathApp1 = "C:\Program Files\Cogent\Cogent DataHub\"
-Global $NameApp1 = "CogentDataHub.exe"
-Global $PathApp2 = "C:\Program Files (x86)\Simple-Scada 2\"
+Global $PathApp1 = "C:\Program Files\SimpleScada2\"
+Global $NameApp1 = "Client.exe"
+Global $PathApp2 = "C:\Program Files\SimpleScada2\"
 Global $NameApp2 = "Server.exe"
 
 Global $App1Window = "no valid license"
-Global $App2Window = "Время вышло"
+Global $App1WindowEnd = "Cogent DataHub"
+Global $App2Window = "Simple-Scada Server"
+Global $App2WindowEnd = "Время вышло"
 
-Global $TimeApp1 = 0.5 ; in min
-Global $Timer1 ; close after run delay
+Global $TimeApp1 = 20 ; in min test
+Global $Timer1 ; close after run
 
 Global $aMes = ""
 Global $App1isRun = false
+Global $App2isRun = false
 Global $hGUI
 
 Main()
 
 Func Main()
    ; Create a GUI with various controls.
-   $hGUI = GUICreate("Example")
+   $hGUI = GUICreate("superCrack")
    Local $idOK = GUICtrlCreateButton("OK", 310, 370, 85, 25)
 
    ; Display the GUI.
@@ -31,31 +34,52 @@ Func Main()
    $aMes  = "Setup start..."
    GUICtrlCreateLabel($aMes, 30, 10)
 
+   WinSetState("superCrack", "", @SW_HIDE)
+
    While 1
 	  GUICtrlCreateLabel($aMes, 30, 10)
 	  Switch GUIGetMsg()
 	  Case $GUI_EVENT_CLOSE, $idOK
 		 $aMes = "Close app.."
-		 Sleep(1000)
 		 ExitLoop
 	  EndSwitch
 
-	  if ($App1isRun) Then
+	  if ($App1isRun or $App2isRun) Then
 		 if WinExists($App1Window) then
 			CloseWind($App1Window)
 		 EndIf
 		 if WinExists($App2Window) then
 			CloseWind($App2Window)
 		 EndIf
+		 if WinExists($App1WindowEnd) then
+			CloseWind($App1WindowEnd)
+			$App1isRun = false
+		 EndIf
+		 if WinExists($App2WindowEnd) or (ProcessExists($NameApp2) = false) then
+			CloseWind($App2WindowEnd)
+			$App2isRun = false
+		 EndIf
+
+
 		 $aMes = "Start count down timer to restart..."
-		 Sleep(1000)
-		 If @error Or $Timer1 = 0 Then ContinueLoop
-		 Else
-		 $aMes = "Running app now..."
-		 $App1isRun = RunApps($PathApp1, $NameApp1)
-		 RunApps($PathApp2, $NameApp2)
-		 $Timer1 = _Timer_SetTimer($hGUI, $TimeApp1*60000, "_Close")
+		 Sleep(5000)
+		 ;$App1isRun = false;
+		 ;$App2isRun = false;
+		 ;If @error Or $Timer1 = 0 Then ContinueLoop
 	  EndIf
+
+	  if ($App1isRun = false) then
+		 $aMes = "Running app1 now..."
+		 Sleep(1000)
+		 $App1isRun = RunApps($PathApp1, $NameApp1)
+	  EndIf
+
+	  if ($App2isRun = false) then
+		 $aMes = "Running app2 now..."
+		 Sleep(1000)
+		 $App2isRun = RunApps($PathApp2, $NameApp2)
+	  EndIf
+		 ;$Timer1 = _Timer_SetTimer($hGUI, $TimeApp1*60000, "_Close")
    WEnd
    GUIDelete($hGUI)
 EndFunc
@@ -71,7 +95,7 @@ Func RunApps($Path, $name)
 	  $aMes = "App is run!"
 	  return True
    Else
-	  _Timer_KillTimer($hGUI, $Timer1)
+	  ;_Timer_KillTimer($hGUI, $Timer1)
 	  $aMes = "Running app..."
 	  Run($Path&$name)
 	  WinWait($name, "", 5)
