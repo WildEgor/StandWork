@@ -163,9 +163,7 @@ SETTINGS_
 _1
 edt_PID
 Не выбран
-C:\Users\STAND\Documents\SimpleScada2\Projects\Stend_v8
-C:\SCADA\Projects\Stend_v8
-\User files\restart.bat
+\User files\My scripts\start.bat
 
 dtInteger
 dtInt64
